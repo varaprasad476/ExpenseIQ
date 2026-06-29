@@ -1,27 +1,36 @@
+import api from "./api/api";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import SummaryCard from "./components/SummaryCard/SummaryCard";
 import TransactionForm from "./components/TransactionForm/TransactionForm";
 import TransactionList from "./components/TransactionList/TransactionList";
+import SearchBar from "./components/SearchBar/SearchBar";
+import FilterBar from "./components/FilterBar/FilterBar";
+import Charts from "./components/Charts/Charts";
 
 function App() {
-  const [transactions, setTransactions] = useState(() => {
-    const savedTransactions = localStorage.getItem("transactions");
+  const [transactions, setTransactions] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
 
-    return savedTransactions
-      ? JSON.parse(savedTransactions)
-      : [];
-  });
+
 
 
 
   useEffect(() => {
-    localStorage.setItem(
-      "transactions",
-      JSON.stringify(transactions)
-    );
-  }, [transactions]);
+    fetchTransactions();
+  }, []);
+
+  async function fetchTransactions() {
+    try {
+      const response = await api.get("/transactions");
+
+      setTransactions(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const income = transactions
     .filter((transaction) => transaction.type === "Income")
@@ -31,6 +40,16 @@ function App() {
     .filter((transaction) => transaction.type === "Expense")
     .reduce((total, transaction) => total + transaction.amount, 0);
 
+  const filteredTransactions = transactions.filter((transaction) => {
+    const matchesSearch = transaction.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesFilter =
+      filter === "All" || transaction.type === filter;
+
+    return matchesSearch && matchesFilter;
+  });
   const balance = income - expense;
 
   return (
@@ -60,14 +79,32 @@ function App() {
           />
         </div>
 
+        <Charts
+          income={income}
+          expense={expense}
+        />
+
         <TransactionForm
           transactions={transactions}
           setTransactions={setTransactions}
+          fetchTransactions={fetchTransactions}
         />
 
+        <SearchBar
+          search={search}
+          setSearch={setSearch}
+        />
+
+        <FilterBar
+          filter={filter}
+          setFilter={setFilter}
+        />
+
+
         <TransactionList
-          transactions={transactions}
+          transactions={filteredTransactions}
           setTransactions={setTransactions}
+          fetchTransactions={fetchTransactions}
         />
       </div>
     </div>

@@ -1,11 +1,13 @@
+import api from "../../api/api";
 import { useState } from "react";
 import "./TransactionList.css";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import TransactionCard from "../TransactionCard/TransactionCard";
 
 function TransactionList({
     transactions,
     setTransactions,
-    setEditingTransaction,
+    fetchTransactions,
 }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
@@ -17,30 +19,25 @@ function TransactionList({
         setIsModalOpen(true);
     }
 
-    function confirmDelete() {
-        const updatedTransactions = transactions.filter(
-            (transaction) => transaction.id !== selectedId
-        );
+    async function confirmDelete() {
+        try {
+            await api.delete(`/transactions/${selectedId}`);
 
-        setTransactions(updatedTransactions);
-        setIsModalOpen(false);
-        setSelectedId(null);
-        setSelectedTitle("");
+            await fetchTransactions();
+
+            setIsModalOpen(false);
+            setSelectedId(null);
+            setSelectedTitle("");
+        } catch (error) {
+            console.error(error);
+            alert("Failed to delete transaction");
+        }
     }
 
     function cancelDelete() {
         setIsModalOpen(false);
         setSelectedId(null);
         setSelectedTitle("");
-    }
-
-    function editTransaction(transaction) {
-        setEditingTransaction(transaction);
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
     }
 
     return (
@@ -52,56 +49,14 @@ function TransactionList({
                     <p>No transactions yet.</p>
                 ) : (
                     transactions.map((transaction) => (
-                        <div className="transaction-item" key={transaction.id}>
-                            <div className="transaction-header">
-                                <div>
-                                    <div className="transaction-title">
-                                        💰 {transaction.title}
-                                    </div>
-
-                                    <div className="transaction-type">
-                                        {transaction.type === "Income" ? "🟢 Income" : "🔴 Expense"}
-                                    </div>
-
-                                    <small className="transaction-date">
-                                        🕒 {transaction.date}
-                                    </small>
-                                </div>
-
-                                <div
-                                    className="transaction-amount"
-                                    style={{
-                                        color:
-                                            transaction.type === "Income"
-                                                ? "green"
-                                                : "red",
-                                    }}
-                                >
-                                    ₹{transaction.amount}
-                                </div>
-                            </div>
-
-                            <div className="transaction-actions">
-                                <button
-                                    className="edit-btn"
-                                    onClick={() => editTransaction(transaction)}
-                                >
-                                    ✏ Edit
-                                </button>
-
-                                <button
-                                    className="delete-btn"
-                                    onClick={() =>
-                                        openDeleteModal(
-                                            transaction.id,
-                                            transaction.title
-                                        )
-                                    }
-                                >
-                                    🗑 Delete
-                                </button>
-                            </div>
-                        </div>
+                        <TransactionCard
+                            key={transaction._id}
+                            transaction={transaction}
+                            transactions={transactions}
+                            setTransactions={setTransactions}
+                            fetchTransactions={fetchTransactions}
+                            openDeleteModal={openDeleteModal}
+                        />
                     ))
                 )}
             </div>

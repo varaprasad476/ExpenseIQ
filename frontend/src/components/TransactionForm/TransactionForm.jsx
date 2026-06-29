@@ -1,12 +1,13 @@
+import api from "../../api/api";
 import { useState } from "react";
 import "./TransactionForm.css";
 
-function TransactionForm({ transactions, setTransactions }) {
+function TransactionForm({ transactions, setTransactions, fetchTransactions, }) {
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [type, setType] = useState("Income");
 
-    function addTransaction() {
+    async function addTransaction() {
         if (title === "" || amount === "") {
             alert("Please fill all fields!");
             return;
@@ -26,11 +27,23 @@ function TransactionForm({ transactions, setTransactions }) {
             }).format(new Date()),
         };
 
-        setTransactions([...transactions, newTransaction]);
+        try {
+            const response = await api.post("/transactions", {
+                title,
+                amount: Number(amount),
+                type: type.toLowerCase(),
+                category: "General",
+            });
 
-        setTitle("");
-        setAmount("");
-        setType("Income");
+            await fetchTransactions();
+
+            setTitle("");
+            setAmount("");
+            setType("Income");
+        } catch (error) {
+            console.error(error);
+            alert("Failed to add transaction");
+        }
     }
 
     return (

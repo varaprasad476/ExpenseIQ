@@ -6,6 +6,7 @@ function TransactionForm({ transactions, setTransactions, fetchTransactions, }) 
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [type, setType] = useState("Income");
+    const [category, setCategory] = useState("Salary");
 
     async function addTransaction() {
         if (title === "" || amount === "") {
@@ -32,7 +33,7 @@ function TransactionForm({ transactions, setTransactions, fetchTransactions, }) 
                 title,
                 amount: Number(amount),
                 type: type.toLowerCase(),
-                category: "General",
+                category,
             });
 
             await fetchTransactions();
@@ -40,6 +41,7 @@ function TransactionForm({ transactions, setTransactions, fetchTransactions, }) 
             setTitle("");
             setAmount("");
             setType("Income");
+            setCategory("Salary");
         } catch (error) {
             console.error(error);
             alert("Failed to add transaction");
@@ -66,10 +68,43 @@ function TransactionForm({ transactions, setTransactions, fetchTransactions, }) 
 
             <select
                 value={type}
-                onChange={(e) => setType(e.target.value)}
+                onChange={(e) => {
+                    const newType = e.target.value;
+                    setType(newType);
+
+                    if (newType === "Income") {
+                        setCategory("Salary");
+                    } else {
+                        setCategory("Food");
+                    }
+                }}
             >
                 <option>Income</option>
                 <option>Expense</option>
+            </select>
+
+            <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+            >
+                {type === "Income" ? (
+                    <>
+                        <option>Salary</option>
+                        <option>Freelance</option>
+                        <option>Bonus</option>
+                        <option>Investment</option>
+                    </>
+                ) : (
+                    <>
+                        <option>Food</option>
+                        <option>Travel</option>
+                        <option>Shopping</option>
+                        <option>Bills</option>
+                        <option>Entertainment</option>
+                        <option>Health</option>
+                        <option>Education</option>
+                    </>
+                )}
             </select>
 
             <button onClick={addTransaction}>

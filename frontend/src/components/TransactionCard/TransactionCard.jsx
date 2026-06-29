@@ -90,13 +90,24 @@ function TransactionCard({
                     </div>
 
                     <div className="transaction-type">
-                        {transaction.type === "Income"
+                        {transaction.type === "income"
                             ? "🟢 Income"
                             : "🔴 Expense"}
                     </div>
 
+                    <div className="transaction-category">
+                        🏷️ {transaction.category}
+                    </div>
+
                     <small className="transaction-date">
-                        🕒 {transaction.date}
+                        🕒{" "}
+                        {new Date(transaction.date).toLocaleString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })}
                     </small>
                 </div>
 
@@ -104,7 +115,7 @@ function TransactionCard({
                     className="transaction-amount"
                     style={{
                         color:
-                            transaction.type === "Income"
+                            transaction.type === "income"
                                 ? "green"
                                 : "red",
                     }}

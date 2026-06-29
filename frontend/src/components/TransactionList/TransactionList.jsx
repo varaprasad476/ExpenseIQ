@@ -43,7 +43,7 @@ function TransactionList({
     return (
         <>
             <div className="transaction-list">
-                <h2>Recent Transactions</h2>
+
 
                 {transactions.length === 0 ? (
                     <p>No transactions yet.</p>

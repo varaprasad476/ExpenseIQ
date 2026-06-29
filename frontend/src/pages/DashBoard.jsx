@@ -1,6 +1,5 @@
 import { useTransactions } from "../context/TransactionContext";
 
-import Navbar from "../components/Navbar/Navbar";
 import SummaryCard from "../components/SummaryCard/SummaryCard";
 import Charts from "../components/Charts/Charts";
 import TransactionList from "../components/TransactionList/TransactionList";
@@ -33,82 +32,71 @@ function Dashboard() {
     return (
         <div className="space-y-8">
 
-            <Navbar />
-
+            {/* Heading */}
             <div>
                 <h1 className="text-4xl font-bold">
                     👋 Welcome back!
                 </h1>
 
-                <p className="text-gray-500 mt-2">
+                <p className="text-gray-500">
                     Here's your financial overview.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
                 <SummaryCard
                     title="Total Balance"
                     amount={`₹${balance}`}
-                    color="black"
+                    color="#2563eb"
                 />
 
                 <SummaryCard
                     title="Income"
                     amount={`₹${income}`}
-                    color="green"
+                    color="#16a34a"
                 />
 
                 <SummaryCard
                     title="Expense"
                     amount={`₹${expense}`}
-                    color="red"
+                    color="#dc2626"
+                />
+
+                <SummaryCard
+                    title="Biggest Expense"
+                    amount={
+                        biggestExpense
+                            ? `₹${biggestExpense.amount}`
+                            : "₹0"
+                    }
+                    color="#ea580c"
                 />
 
             </div>
 
-            <div className="bg-white rounded-2xl shadow-md p-6">
+            {/* Chart + Recent */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                <h3 className="text-xl font-semibold mb-4">
-                    🔥 Biggest Expense
-                </h3>
-
-                {biggestExpense ? (
-                    <>
-                        <h2 className="text-3xl font-bold text-red-500">
-                            ₹{biggestExpense.amount}
-                        </h2>
-
-                        <p className="mt-2 font-medium">
-                            {biggestExpense.title}
-                        </p>
-
-                        <p className="text-gray-500">
-                            {biggestExpense.category}
-                        </p>
-                    </>
-                ) : (
-                    <p>No expenses yet.</p>
-                )}
-
-            </div>
-
-            <Charts
-                income={income}
-                expense={expense}
-            />
-
-            <div>
-
-                <h2 className="text-2xl font-semibold mb-5">
-                    Recent Transactions
-                </h2>
-
-                <TransactionList
-                    transactions={recentTransactions}
-                    setTransactions={setTransactions}
-                    fetchTransactions={fetchTransactions}
+                <Charts
+                    income={income}
+                    expense={expense}
                 />
+
+                <div className="bg-white rounded-2xl shadow-md p-6">
+
+                    <h2 className="text-2xl font-bold mb-4">
+                        Recent Transactions
+                    </h2>
+
+                    <TransactionList
+                        transactions={recentTransactions}
+                        setTransactions={setTransactions}
+                        fetchTransactions={fetchTransactions}
+                    />
+
+                </div>
 
             </div>
 

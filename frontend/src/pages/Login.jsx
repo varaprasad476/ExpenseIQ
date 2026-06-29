@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
@@ -20,10 +21,11 @@ function Login() {
             });
 
             login(response.data.user, response.data.token);
+            toast.success(`Welcome , ${response.data.user.name}!`);
 
             navigate("/");
         } catch (error) {
-            alert(error.response?.data?.message || "Login Failed");
+            toast.error(error.response?.data?.message || "Login Failed");
         }
     }
 

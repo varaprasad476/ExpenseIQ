@@ -1,6 +1,9 @@
+import { toast } from "sonner";
 import api from "../../api/api";
 import { useState } from "react";
+
 import "./TransactionList.css";
+
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import TransactionCard from "../TransactionCard/TransactionCard";
 
@@ -25,12 +28,14 @@ function TransactionList({
 
             await fetchTransactions();
 
+            toast.success("Transaction deleted successfully");
+
             setIsModalOpen(false);
             setSelectedId(null);
             setSelectedTitle("");
         } catch (error) {
             console.error(error);
-            alert("Failed to delete transaction");
+            toast.error("Failed to delete transaction");
         }
     }
 
@@ -43,10 +48,10 @@ function TransactionList({
     return (
         <>
             <div className="transaction-list">
-
-
                 {transactions.length === 0 ? (
-                    <p>No transactions yet.</p>
+                    <div className="text-center py-10 text-gray-500">
+                        No transactions found.
+                    </div>
                 ) : (
                     transactions.map((transaction) => (
                         <TransactionCard

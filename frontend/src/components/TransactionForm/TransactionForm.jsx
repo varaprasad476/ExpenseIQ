@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import api from "../../api/api";
 import { useState } from "react";
 import "./TransactionForm.css";
@@ -10,7 +11,7 @@ function TransactionForm({ transactions, setTransactions, fetchTransactions, }) 
 
     async function addTransaction() {
         if (title === "" || amount === "") {
-            alert("Please fill all fields!");
+            toast.error("Please fill all fields!");
             return;
         }
 
@@ -36,15 +37,15 @@ function TransactionForm({ transactions, setTransactions, fetchTransactions, }) 
                 category,
             });
 
-            await fetchTransactions();
-
+            window.location.reload();
+            toast.success("Transaction added successfully");
             setTitle("");
             setAmount("");
             setType("Income");
             setCategory("Salary");
         } catch (error) {
             console.error(error);
-            alert("Failed to add transaction");
+            toast.error("Failed to add transaction");
         }
     }
 

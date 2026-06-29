@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import api from "../../api/api";
 import { useState } from "react";
 import "./TransactionCard.css";
@@ -24,11 +25,12 @@ function TransactionCard({
             });
 
             await fetchTransactions();
+            toast.success("Transaction updated successfully");
 
             setIsEditing(false);
         } catch (error) {
             console.error(error);
-            alert("Failed to update transaction");
+            toast.error("Failed to update transaction");
         }
     }
 

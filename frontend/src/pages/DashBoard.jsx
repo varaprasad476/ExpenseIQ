@@ -1,3 +1,4 @@
+import BudgetCard from "../components/BudgetCard/BudgetCard";
 import { useTransactions } from "../context/TransactionContext";
 
 import SummaryCard from "../components/SummaryCard/SummaryCard";
@@ -34,11 +35,11 @@ function Dashboard() {
 
             {/* Heading */}
             <div>
-                <h1 className="text-4xl font-bold">
+                <h1 className="text-4xl font-bold text-black dark:text-white">
                     👋 Welcome back!
                 </h1>
 
-                <p className="text-gray-500">
+                <p className="text-gray-500 dark:text-gray-300">
                     Here's your financial overview.
                 </p>
             </div>
@@ -72,6 +73,10 @@ function Dashboard() {
                             : "₹0"
                     }
                     color="#ea580c"
+                />
+
+                <BudgetCard
+                    expense={expense}
                 />
 
             </div>

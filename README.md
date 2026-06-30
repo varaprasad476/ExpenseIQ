@@ -1,16 +1,120 @@
-# React + Vite
+# 💰 ExpenseIQ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Full Stack Expense Tracker built using the MERN Stack with JWT Authentication, Analytics, PDF/Excel Export, Dark Mode and Responsive UI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Live Demo
 
-## React Compiler
+🌐 Frontend:
+https://expense-iq-ashy-eight.vercel.app
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+⚙ Backend:
+https://expenseiq-3uvv.onrender.com
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Features
+
+- 🔐 JWT Authentication
+- 👤 User Registration & Login
+- ✏ Update Profile
+- 🔑 Change Password
+- 💸 Add Income & Expenses
+- 📋 Transaction Management
+- 📊 Dashboard Analytics
+- 📈 Charts using Recharts
+- 🌙 Dark Mode
+- 🔍 Search Transactions
+- 🎯 Filter Transactions
+- 📄 Export to PDF
+- 📊 Export to Excel
+- 📱 Responsive UI
+- ☁ MongoDB Atlas
+- 🚀 Deployed using Vercel & Render
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- Shadcn UI
+- Framer Motion
+- Axios
+- Recharts
+- Sonner
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- bcrypt
+
+---
+
+## 📂 Folder Structure
+
+```
+ExpenseIQ
+
+frontend/
+
+backend/
+
+README.md
+```
+
+---
+
+## ⚡ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/varaprasad476/ExpenseIQ.git
+```
+
+Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+---
+
+## 📷 Screenshots
+
+Dashboard
+
+Analytics
+
+Transactions
+
+Profile
+
+Dark Mode
+
+(Add screenshots here)
+
+---
+
+## 👨‍💻 Author
+
+Varaprasad Adabala

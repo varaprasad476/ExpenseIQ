@@ -1,56 +1,53 @@
+import { useTransactions } from "../../context/TransactionContext";
 import { toast } from "sonner";
 import api from "../../api/api";
 import { useState } from "react";
 import "./TransactionForm.css";
 
-function TransactionForm({ transactions, setTransactions, fetchTransactions, }) {
+function TransactionForm() {
+    const { fetchTransactions } = useTransactions();
+
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [type, setType] = useState("Income");
     const [category, setCategory] = useState("Salary");
 
     async function addTransaction() {
-        if (title === "" || amount === "") {
+        if (!title.trim() || !amount) {
             toast.error("Please fill all fields!");
             return;
         }
 
-        const newTransaction = {
-            id: Date.now(),
-            title,
-            amount: Number(amount),
-            type,
-            date: new Intl.DateTimeFormat("en-IN", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-            }).format(new Date()),
-        };
-
         try {
-            const response = await api.post("/transactions", {
+            await api.post("/transactions", {
                 title,
                 amount: Number(amount),
                 type: type.toLowerCase(),
                 category,
             });
 
-            await fetchTransactions();
+
+
             toast.success("Transaction added successfully");
+
             setTitle("");
             setAmount("");
             setType("Income");
             setCategory("Salary");
+
         } catch (error) {
             console.error(error);
-            toast.error("Failed to add transaction");
+
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to add transaction"
+            );
         }
     }
 
     return (
         <div className="transaction-form">
+
             <h2>Add Transaction</h2>
 
             <input
@@ -111,6 +108,7 @@ function TransactionForm({ transactions, setTransactions, fetchTransactions, }) 
             <button onClick={addTransaction}>
                 Add Transaction
             </button>
+
         </div>
     );
 }

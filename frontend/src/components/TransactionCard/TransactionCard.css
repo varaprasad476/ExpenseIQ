@@ -1,106 +1,165 @@
 .transaction-list {
-  margin-top: 40px;
-}
-
-.transaction-list h2 {
-  margin-bottom: 20px;
+    margin-top: 30px;
 }
 
 .transaction-item {
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    background: var(--card-bg, #ffffff);
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .transaction-item {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.transaction-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(37, 99, 235, 0.15);
 }
 
 .transaction-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .transaction-title {
-  font-size: 20px;
-  font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.dark .transaction-title {
+    color: white;
 }
 
 .transaction-type {
-  margin-top: 8px;
-  font-size: 14px;
-  color: gray;
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #f3f4f6;
+}
+
+.dark .transaction-type {
+    background: #1e293b;
+    color: white;
+}
+
+.transaction-category {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.dark .transaction-category {
+    background: #1e3a8a;
+    color: #bfdbfe;
 }
 
 .transaction-date {
-  display: block;
-  margin-top: 8px;
-  color: #777;
-  font-size: 13px;
+    display: block;
+    margin-top: 12px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.dark .transaction-date {
+    color: #94a3b8;
 }
 
 .transaction-amount {
-  font-size: 26px;
-  font-weight: bold;
+    font-size: 32px;
+    font-weight: 800;
 }
 
 .transaction-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 .edit-btn,
 .delete-btn {
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: white;
-  font-weight: 600;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    transition: all .25s ease;
 }
 
-.edit-btn {
-  background: #2563eb;
+.edit-btn:hover{
+    transform:translateY(-2px);
 }
 
 .edit-btn:hover {
-  background: #1d4ed8;
+    transform: scale(1.05);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, .35);
 }
 
 .delete-btn {
-  background: crimson;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
 }
 
-.delete-btn:hover {
-  background: darkred;
+.delete-btn:hover{
+    transform:translateY(-2px);
 }
 
 .transaction-item input,
 .transaction-item select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 15px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    font-size: 15px;
+}
+
+.dark .transaction-item input,
+.dark .transaction-item select {
+    background: #1e293b;
+    color: white;
+    border: 1px solid #334155;
 }
 
 .transaction-item input:focus,
 .transaction-item select:focus {
-  outline: none;
-  border-color: #2563eb;
+    outline: none;
+    border-color: #2563eb;
 }
 
-.transaction-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
+@media (max-width: 768px) {
+    .transaction-header {
+        flex-direction: column;
+        gap: 18px;
+    }
 
-.transaction-category {
-    color: #666;
-    font-size: 14px;
-    margin-top: 4px;
+    .transaction-amount {
+        font-size: 28px;
+    }
+
+    .transaction-actions {
+        flex-direction: column;
+    }
+
+    .edit-btn,
+    .delete-btn {
+        width: 100%;
+    }
 }

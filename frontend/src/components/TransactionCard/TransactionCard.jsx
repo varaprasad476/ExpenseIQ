@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 import api from "../../api/api";
 import { useState } from "react";
@@ -5,15 +6,18 @@ import "./TransactionCard.css";
 
 function TransactionCard({
     transaction,
-    transactions,
-    setTransactions,
     fetchTransactions,
     openDeleteModal,
 }) {
     const [isEditing, setIsEditing] = useState(false);
+
     const [title, setTitle] = useState(transaction.title);
     const [amount, setAmount] = useState(transaction.amount);
-    const [type, setType] = useState(transaction.type);
+    const [type, setType] = useState(
+        transaction.type.charAt(0).toUpperCase() +
+        transaction.type.slice(1)
+    );
+    const [category, setCategory] = useState(transaction.category);
 
     async function saveTransaction() {
         try {
@@ -21,10 +25,11 @@ function TransactionCard({
                 title,
                 amount: Number(amount),
                 type: type.toLowerCase(),
-                category: transaction.category || "General",
+                category,
             });
 
             await fetchTransactions();
+
             toast.success("Transaction updated successfully");
 
             setIsEditing(false);
@@ -37,13 +42,22 @@ function TransactionCard({
     function cancelEdit() {
         setTitle(transaction.title);
         setAmount(transaction.amount);
-        setType(transaction.type);
+        setType(
+            transaction.type.charAt(0).toUpperCase() +
+            transaction.type.slice(1)
+        );
+        setCategory(transaction.category);
         setIsEditing(false);
     }
 
     if (isEditing) {
         return (
-            <div className="transaction-item">
+            <motion.div
+                className="transaction-item"
+                layout
+                whileHover={{ y: -5 }}
+            >
+
                 <input
                     type="text"
                     value={title}
@@ -58,13 +72,47 @@ function TransactionCard({
 
                 <select
                     value={type}
-                    onChange={(e) => setType(e.target.value)}
+                    onChange={(e) => {
+                        const newType = e.target.value;
+                        setType(newType);
+
+                        if (newType === "Income") {
+                            setCategory("Salary");
+                        } else {
+                            setCategory("Food");
+                        }
+                    }}
                 >
                     <option>Income</option>
                     <option>Expense</option>
                 </select>
 
+                <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                >
+                    {type === "Income" ? (
+                        <>
+                            <option>Salary</option>
+                            <option>Freelance</option>
+                            <option>Bonus</option>
+                            <option>Investment</option>
+                        </>
+                    ) : (
+                        <>
+                            <option>Food</option>
+                            <option>Travel</option>
+                            <option>Shopping</option>
+                            <option>Bills</option>
+                            <option>Entertainment</option>
+                            <option>Health</option>
+                            <option>Education</option>
+                        </>
+                    )}
+                </select>
+
                 <div className="transaction-actions">
+
                     <button
                         className="edit-btn"
                         onClick={saveTransaction}
@@ -78,15 +126,27 @@ function TransactionCard({
                     >
                         ❌ Cancel
                     </button>
+
                 </div>
-            </div>
+
+            </motion.div>
         );
     }
 
     return (
-        <div className="transaction-item">
+        <motion.div
+            className="transaction-item"
+            whileHover={{
+                y: -5,
+                scale: 1.01,
+            }}
+            layout
+        >
+
             <div className="transaction-header">
+
                 <div>
+
                     <div className="transaction-title">
                         💰 {transaction.title}
                     </div>
@@ -111,6 +171,7 @@ function TransactionCard({
                             minute: "2-digit",
                         })}
                     </small>
+
                 </div>
 
                 <div
@@ -126,17 +187,16 @@ function TransactionCard({
                         transaction.amount
                     )}
                 </div>
+
             </div>
 
             <div className="transaction-actions">
+
                 <button
                     className="edit-btn"
-                    onClick={() => {
-                        console.log("Edit clicked");
-                        setIsEditing(true);
-                    }}
+                    onClick={() => setIsEditing(true)}
                 >
-                    ✏ Edit
+                    ✏️ Edit
                 </button>
 
                 <button
@@ -150,8 +210,10 @@ function TransactionCard({
                 >
                     🗑 Delete
                 </button>
+
             </div>
-        </div>
+
+        </motion.div>
     );
 }
 

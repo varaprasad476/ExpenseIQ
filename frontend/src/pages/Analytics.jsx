@@ -17,11 +17,11 @@ function Analytics() {
         <div className="space-y-8">
 
             <div>
-                <h1 className="text-4xl font-bold">
+                <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
                     📊 Analytics
                 </h1>
 
-                <p className="text-gray-500">
+                <p className="text-gray-500 dark:text-gray-400">
                     Visualize your financial data.
                 </p>
             </div>

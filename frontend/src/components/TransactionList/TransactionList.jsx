@@ -6,12 +6,15 @@ import "./TransactionList.css";
 
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import TransactionCard from "../TransactionCard/TransactionCard";
+import { useTransactions } from "../../context/TransactionContext";
 
 function TransactionList({
     transactions,
     setTransactions,
     fetchTransactions,
 }) {
+    const { loading } = useTransactions();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
     const [selectedTitle, setSelectedTitle] = useState("");
@@ -45,12 +48,29 @@ function TransactionList({
         setSelectedTitle("");
     }
 
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600"></div>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="transaction-list">
+
                 {transactions.length === 0 ? (
-                    <div className="text-center py-10 text-gray-500">
-                        No transactions found.
+                    <div className="text-center py-16">
+                        <h2 className="text-6xl mb-4">📭</h2>
+
+                        <h3 className="text-2xl font-bold dark:text-white">
+                            No Transactions Yet
+                        </h3>
+
+                        <p className="text-gray-500 mt-3">
+                            Start by adding your first transaction.
+                        </p>
                     </div>
                 ) : (
                     transactions.map((transaction) => (
@@ -64,6 +84,7 @@ function TransactionList({
                         />
                     ))
                 )}
+
             </div>
 
             <ConfirmModal

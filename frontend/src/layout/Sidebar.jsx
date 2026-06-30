@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -13,6 +14,18 @@ import { Button } from "@/components/ui/button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+import {
+    LayoutDashboard,
+    PlusCircle,
+    Receipt,
+    PieChart,
+    User,
+    Moon,
+    Sun,
+    LogOut,
+    Wallet,
+} from "lucide-react";
+
 function Sidebar() {
     const navigate = useNavigate();
 
@@ -21,85 +34,121 @@ function Sidebar() {
 
     const [open, setOpen] = useState(false);
 
-    const linkStyle =
-        "flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-100 dark:hover:bg-slate-700 transition-all";
-
     function handleLogout() {
         toast.success("Logged out successfully");
         logout();
         navigate("/login");
     }
 
+    const navStyle = ({ isActive }) =>
+        `flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 font-medium ${isActive
+            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg"
+            : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+        }`;
+
     return (
-        <aside className="w-64 min-h-screen bg-white dark:bg-slate-900 shadow-lg p-6 flex flex-col">
+        <>
+            <motion.aside
+                initial={{ x: -80, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="w-72 min-h-screen bg-white/90 dark:bg-slate-950/95 backdrop-blur-xl border-r dark:border-slate-800 shadow-xl flex flex-col p-6"
+            >
+                {/* Logo */}
+                <div className="mb-10">
+                    <div className="flex items-center gap-3">
+                        <div className="bg-blue-600 text-white rounded-2xl p-3">
+                            <Wallet size={26} />
+                        </div>
 
-            <div className="mb-10">
-                <h1 className="text-3xl font-bold text-blue-600">
-                    ExpenseIQ
-                </h1>
+                        <div>
+                            <h1 className="text-3xl font-extrabold text-blue-600">
+                                ExpenseIQ
+                            </h1>
 
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    Smart Finance Dashboard
-                </p>
-            </div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                Smart Finance Dashboard
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-            <nav className="flex flex-col gap-3">
+                {/* Navigation */}
+                <nav className="space-y-2">
+                    <NavLink to="/" className={navStyle}>
+                        <LayoutDashboard size={20} />
+                        Dashboard
+                    </NavLink>
 
-                <NavLink className={linkStyle} to="/">
-                    🏠 Dashboard
-                </NavLink>
+                    <NavLink to="/add" className={navStyle}>
+                        <PlusCircle size={20} />
+                        Add Transaction
+                    </NavLink>
 
-                <NavLink className={linkStyle} to="/add">
-                    ➕ Add Transaction
-                </NavLink>
+                    <NavLink to="/transactions" className={navStyle}>
+                        <Receipt size={20} />
+                        Transactions
+                    </NavLink>
 
-                <NavLink className={linkStyle} to="/transactions">
-                    📋 Transactions
-                </NavLink>
+                    <NavLink to="/analytics" className={navStyle}>
+                        <PieChart size={20} />
+                        Analytics
+                    </NavLink>
 
-                <NavLink className={linkStyle} to="/analytics">
-                    📊 Analytics
-                </NavLink>
+                    <NavLink to="/profile" className={navStyle}>
+                        <User size={20} />
+                        Profile
+                    </NavLink>
+                </nav>
 
-                <NavLink className={linkStyle} to="/profile">
-                    👤 Profile
-                </NavLink>
+                {/* Bottom */}
+                <div className="mt-auto">
+                    <div className="rounded-2xl bg-slate-100 dark:bg-slate-900 p-4 mb-5">
+                        <p className="text-xs text-gray-500 uppercase tracking-wide">
+                            Logged in as
+                        </p>
 
-            </nav>
+                        <h2 className="font-bold text-lg mt-2 dark:text-white">
+                            {user?.name}
+                        </h2>
 
-            <div className="mt-auto border-t dark:border-slate-700 pt-5">
+                        <p className="text-sm text-gray-500">
+                            {user?.email}
+                        </p>
+                    </div>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                    Logged in as
-                </p>
+                    <Button
+                        className="w-full mb-3 rounded-xl"
+                        variant="secondary"
+                        onClick={() => setDarkMode(!darkMode)}
+                    >
+                        {darkMode ? (
+                            <>
+                                <Sun className="mr-2 h-5 w-5" />
+                                Light Mode
+                            </>
+                        ) : (
+                            <>
+                                <Moon className="mr-2 h-5 w-5" />
+                                Dark Mode
+                            </>
+                        )}
+                    </Button>
 
-                <h3 className="font-semibold dark:text-white mb-5">
-                    {user?.name}
-                </h3>
-
-                <Button
-                    className="w-full mb-3"
-                    variant="secondary"
-                    onClick={() => setDarkMode(!darkMode)}
-                >
-                    {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-                </Button>
-
-                <Button
-                    variant="destructive"
-                    className="w-full"
-                    onClick={() => setOpen(true)}
-                >
-                    🚪 Logout
-                </Button>
-
-            </div>
+                    <Button
+                        variant="destructive"
+                        className="w-full rounded-xl"
+                        onClick={() => setOpen(true)}
+                    >
+                        <LogOut className="mr-2 h-5 w-5" />
+                        Logout
+                    </Button>
+                </div>
+            </motion.aside>
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>
-
                     <DialogHeader>
-
                         <DialogTitle>
                             Confirm Logout
                         </DialogTitle>
@@ -107,11 +156,9 @@ function Sidebar() {
                         <DialogDescription>
                             Are you sure you want to logout from ExpenseIQ?
                         </DialogDescription>
-
                     </DialogHeader>
 
                     <DialogFooter>
-
                         <Button
                             variant="outline"
                             onClick={() => setOpen(false)}
@@ -125,13 +172,10 @@ function Sidebar() {
                         >
                             Logout
                         </Button>
-
                     </DialogFooter>
-
                 </DialogContent>
             </Dialog>
-
-        </aside>
+        </>
     );
 }
 

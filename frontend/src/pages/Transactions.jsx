@@ -31,13 +31,14 @@ function Transactions() {
 
     return (
         <div className="space-y-6">
+
             {/* Heading */}
             <div>
-                <h1 className="text-4xl font-bold">
+                <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
                     📋 Transactions
                 </h1>
 
-                <p className="text-gray-500">
+                <p className="text-gray-500 dark:text-gray-400">
                     Search, filter, edit and manage all your transactions.
                 </p>
             </div>
@@ -54,31 +55,23 @@ function Transactions() {
                 setFilter={setFilter}
             />
 
-            <div className="flex justify-end">
-                <button
-                    onClick={() => exportTransactions(filteredTransactions)}
-                    className="bg-green-600 text-white px-5 py-3 rounded-xl hover:bg-green-700 transition"
-                >
-                    📥 Export to Excel
-                </button>
-            </div>
-
-            <div className="flex gap-3 justify-end">
+            {/* Export Buttons */}
+            <div className="flex justify-end gap-3">
 
                 <button
                     onClick={() => exportTransactions(filteredTransactions)}
-                    className="bg-green-600 text-white px-5 py-3 rounded-xl hover:bg-green-700"
+                    className="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl font-semibold transition-all"
                 >
-                    📥 Excel
+                    📊 Export Excel
                 </button>
 
                 <button
                     onClick={() =>
                         exportTransactionsPDF(filteredTransactions)
                     }
-                    className="bg-red-600 text-white px-5 py-3 rounded-xl hover:bg-red-700"
+                    className="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-semibold transition-all"
                 >
-                    📄 PDF
+                    📄 Export PDF
                 </button>
 
             </div>
@@ -89,6 +82,7 @@ function Transactions() {
                 setTransactions={setTransactions}
                 fetchTransactions={fetchTransactions}
             />
+
         </div>
     );
 }

@@ -5,17 +5,22 @@ const TransactionContext = createContext();
 
 export function TransactionProvider({ children }) {
     const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchTransactions();
     }, []);
 
     async function fetchTransactions() {
+        setLoading(true);
+
         try {
             const response = await api.get("/transactions");
             setTransactions(response.data);
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -25,6 +30,7 @@ export function TransactionProvider({ children }) {
                 transactions,
                 setTransactions,
                 fetchTransactions,
+                loading,
             }}
         >
             {children}

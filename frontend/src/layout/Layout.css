@@ -7,4 +7,12 @@
     flex: 1;
     padding: 30px;
     background: #f5f7fb;
+    transition: all 0.3s ease;
+}
+
+
+
+.dark .content {
+    background: #020617; /* slate-950 */
+    color: white;
 }

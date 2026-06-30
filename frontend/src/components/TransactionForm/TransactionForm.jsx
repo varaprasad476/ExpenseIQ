@@ -37,7 +37,7 @@ function TransactionForm({ transactions, setTransactions, fetchTransactions, }) 
                 category,
             });
 
-            window.location.reload();
+            await fetchTransactions();
             toast.success("Transaction added successfully");
             setTitle("");
             setAmount("");

@@ -1,11 +1,21 @@
 .charts-container {
-  margin: 35px 0;
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    margin: 35px 0;
+    padding: 20px;
+    border-radius: 24px;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    transition: all .3s ease;
+}
+
+.dark .charts-container {
+    background: #0f172a;
 }
 
 .charts-container h2 {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.dark .charts-container h2 {
+    color: white;
 }

@@ -1,11 +1,11 @@
-import { useTransactions } from "../../context/TransactionContext";
 import { toast } from "sonner";
 import api from "../../api/api";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TransactionForm.css";
 
 function TransactionForm() {
-    const { fetchTransactions } = useTransactions();
+    const navigate = useNavigate();
 
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
@@ -26,8 +26,6 @@ function TransactionForm() {
                 category,
             });
 
-
-
             toast.success("Transaction added successfully");
 
             setTitle("");
@@ -35,6 +33,7 @@ function TransactionForm() {
             setType("Income");
             setCategory("Salary");
 
+            navigate("/transactions");
         } catch (error) {
             console.error(error);
 
@@ -47,7 +46,6 @@ function TransactionForm() {
 
     return (
         <div className="transaction-form">
-
             <h2>Add Transaction</h2>
 
             <input
@@ -108,7 +106,6 @@ function TransactionForm() {
             <button onClick={addTransaction}>
                 Add Transaction
             </button>
-
         </div>
     );
 }

@@ -101,20 +101,56 @@ npm run dev
 
 ## 📷 Screenshots
 
-Dashboard
+### 📊 Dashboard
 
-Analytics
+![Dashboard](screenshots/dashboard.png)
 
-Transactions
-
-Profile
-
-Dark Mode
-
-(Add screenshots here)
+Get a complete overview of your finances with balance, income, expenses, biggest expense and recent transactions.
 
 ---
 
-## 👨‍💻 Author
+### 💳 Transactions
 
-Varaprasad Adabala
+![Transactions](screenshots/transactions.png)
+
+Search, filter, edit, delete and export transactions as PDF or Excel.
+
+---
+
+### 📈 Analytics
+
+![Analytics](screenshots/analytics.png)
+
+Interactive charts showing income vs expense and monthly spending.
+
+---
+
+### ➕ Add Transaction
+
+![Add Transaction](screenshots/add-transaction.png)
+
+Quickly add categorized income and expense transactions.
+
+---
+
+### 👤 Profile
+
+![Profile](screenshots/profile.png)
+
+Manage your profile, change your name and monitor your financial summary.
+
+---
+
+### 🔒 Change Password
+
+![Change Password](screenshots/change-password.png)
+
+Securely update your account password.
+
+---
+
+### 🚪 Logout Confirmation
+
+![Logout](screenshots/logout.png)
+
+Confirmation dialog before logging out.
